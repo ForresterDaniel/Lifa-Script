@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lifa Script</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-    }
-    embed {
       width: 100%;
       height: 100%;
+      overflow: hidden;
+      background: #111;
+    }
+    #viewer {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+    #viewer iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
     }
   </style>
 </head>
 <body>
-  <embed src="Lifa-Script-v1.pdf" type="application/pdf">
+  <div id="viewer">
+    <iframe src="Lifa-Script-v1.pdf#view=FitH" title="Lifa Script PDF"></iframe>
+  </div>
 </body>
 </html>
