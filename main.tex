@@ -1,0 +1,331 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper,margin=2.4cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage[UTF8]{ctex} % Chinese support (use XeLaTeX in Overleaf)
+
+% Use a CJK font that renders 乂 correctly on Overleaf:
+\setCJKmainfont{Noto Sans CJK SC}
+
+\title{理法（Lǐfǎ）Script\\A Phonetic--Logical Re-architecture of Mandarin}
+\author{Daniel Forrester}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Summary}
+理法（Lǐfǎ）Script is a phonetic–logical re-architecture of Mandarin Chinese. It is not an orthographic reform of Hanzi and not a constructed-language experiment. Rather, it is a deterministic, reversible, and procedural writing system designed to make the phonetic, grammatical, logical, and mathematical structure of Mandarin explicit.
+
+Lǐfǎ separates pronunciation, grammatical role, and semantic domain into distinct, composable layers. All lexical content is written phonemically, fully expanded into its pinyin letter sequence, and then disambiguated using a closed set of explicit markers. This design removes reliance on contextual inference while preserving a one-to-one correspondence with spoken Mandarin.
+
+Unlike romanisation systems such as Hanyu Pinyin and Zhuyin, which encode sound but omit structure, Lǐfǎ treats phonetic transcription as only the first layer of representation. Grammatical roles, negation, conjunction, classification, identity, and scope are marked formally, yielding a representation that is unambiguous and machine-interpretable. Unlike Hanzi-based reforms, Lǐfǎ does not retain morphographic characters and therefore avoids their inherent opacity to formal analysis.
+
+Lǐfǎ is not intended to replace Mandarin grammar or introduce new constructions. Every Lǐfǎ sentence corresponds directly to an existing Mandarin sentence, and the mapping is reversible by design. A built-in mathematics and logic layer extends the same principles to arithmetic, variables, functions, and comparison, allowing linguistic and mathematical expressions to coexist under a single evaluation model.
+
+In summary, Lǐfǎ provides a formal, phonetic, and logically annotated representation of Mandarin that is precise, analyzable, and computationally compatible, addressing limitations left unresolved by existing writing systems.
+
+\section{Alphabet (Letters)}
+\begin{longtable}{lll}
+\toprule
+Latin & Lifa & Spoken \\
+\midrule
+A & 夕 & 夕 \\
+B & 币 & 币乙 \\
+C & 从 & 从乙 \\
+Ch & 出 & 出乙 \\
+D & 大 & 大乙 \\
+E & 儿 & 儿 \\
+F & 非 & 非乙 \\
+G & 工 & 工乙 \\
+H & 火 & 火乙 \\
+I & 乙 & 乙 \\
+J & 几 & 几乙 \\
+K & 开 & 开乙 \\
+L & 力 & 力乙 \\
+M & 木 & 木乙 \\
+N & 乃 & 乃乙 \\
+O & 冂 & 冂 \\
+P & 丕 & 丕乙 \\
+Q & 千 & 千乙 \\
+R & 人 & 人乙 \\
+S & 厶 & 厶乙 \\
+Sh & 山 & 山乙 \\
+T & 土 & 土乙 \\
+U & 匕 & 匕 \\
+Ü & 女 & 女乙 \\
+W & 王 & 王乙 \\
+X & 小 & 小乙 \\
+Y & 元 & 元乙 \\
+Z & 子 & 子乙 \\
+Zh & 中 & 中乙 \\
+\bottomrule
+\end{longtable}
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\section{Core Rules (Specification)}
+\begin{itemize}
+  \item All pinyin syllables must be fully expanded into their phonetic letter sequence; no phoneme may be omitted, merged, or abbreviated.
+  \item Canonical order rule: \textbf{[Tone] + [Phonetic letters] + [Domain] + [Word-type marker]}.
+  \item Adjacent words sharing a single word-type marker are one compound.
+  \item Negation precedes the word it negates and scopes until punctuation.
+  \item Freeze punctuation semantics: \textbf{`,`} clause boundary; \textbf{`。`} sentence end; \textbf{`;`} logical separation (stronger than comma).
+  \item Commas bind clauses loosely; semicolons bind logic; periods terminate scope.
+  \item If ambiguity remains, append a domain determinative; use sparingly; do not number.
+  \item Style levels: \textbf{Formal}: all markers present; \textbf{Compact}: markers only at ambiguity points.
+  \item 丿 marks proper nouns and replaces the concrete-noun marker 犭.
+  \item 丨 replaces all disjunctive conjunctions (“or”), including 或、或者、还是.
+  \item 十 replaces all additive conjunctions (“and”), including 和、及、与、并、且、跟、同、以及、并且、而且, and represents logical addition.
+  \item 一 replaces negation words (不、没) and precedes the word it negates, scoping until punctuation.
+  \item 乂 replaces division, distribution, and rate expressions, including 每、每个、每人、每次、分之、除以、按、平均、各自, and is read as “per / divided by / each”.
+  \item 八 replaces temporal partition and interval expressions, including 在、于、到、每逢、每隔、按时、时候、期间, and is read as “at / every / by / interval of”.
+  \item 二 replaces identificational copulas (“is”), including 是、为、属于、即、等于 (identity use only), and marks identity or definition.
+  \item 三 marks classification or membership (“is a kind of / belongs to”), replacing 属于、算是、作为、是一种.
+  \item 了 marks questions and replaces 吗、呢; 二了 specifically marks identity questions (“X is what?”).
+  \item 〈 〉 replace comparative words (比、更、最) when expressing degree or comparison.
+  \item 「 」 mark direct speech or quoted content; 『 』 are used for nested quotations.
+  \item Verb at clause end marks completion; verb reduplication marks ongoing or habitual aspect.
+  \item All lexical content must be written phonemically; no Hanzi are permitted except approved domain determinatives.
+\end{itemize}
+
+\section{Particles (Legacy Forms)}
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Particle & Lifa (with tone) & Notes \\
+\midrule
+个 & `工乙 & removed by default \\
+的 & 大儿 & removed by default \\
+是 & `山乙 & removed when descriptive/equative \\
+在 & `子夕乙 & removed when location is clear \\
+有 & ˇ元冂匕 & optional / often removed \\
+了 & 力儿/ˇ力乙夕冂 & kept (了 character reused as question marker) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Tone System}
+Tone is marked using standard pinyin diacritics placed before the word (intended to be above the toned vowel in future typography); tone may be omitted only when context makes it unambiguous:
+\[
+\overline{\ } \ (1\text{st}),\quad \acute{\ } \ (2\text{nd}),\quad \check{\ } \ (3\text{rd}),\quad \grave{\ } \ (4\text{th})
+\]
+
+\section{Word-Type Markers}
+Each lexical word carries a word-type marker to fix its grammatical role; in Formal writing all markers are present, while in Compact writing markers may be omitted where context is unambiguous but must be restored whenever ambiguity could arise.
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Role & Lifa Marker \\
+\midrule
+Pronoun & 亻 \\
+Verb / Action & 彳 \\
+Concrete noun & 犭 \\
+Proper noun & 丿 \\
+Abstract noun & 忄 \\
+Adjective & 阝 \\
+Connector & 讠 \\
+Grammatical / function word & 扌 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Pronouns refer to the nearest compatible antecedent within the same sentence unless overridden.
+
+\section{Domain Markers (Only Permitted Hanzi for Lexical Disambiguation)}
+If ambiguity remains after tone and word-type marking, insert exactly one domain determinative immediately before the word-type marker; no other Hanzi are permitted for lexical content other than these.
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Domain & Lifa Marker \\
+\midrule
+General / Education & 教 \\
+Science / Technical & 技 \\
+Mathematics / Logic & 理 \\
+Law / Rules & 律 \\
+Society / Institutions & 会 \\
+Physical / Natural World & 自 \\
+Language / Speech / Text & 言 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Add a new domain only if ambiguity cannot be resolved by context + existing domains.
+
+\section{Optional Logic Extensions (Scope / Reference / Modality)}
+\subsection*{Quantifier Scope}
+Quantifier scope is determined by parentheses, where a numeral governs only the smallest immediately following parenthesised phrase unless its scope is explicitly extended by larger parentheses; in the absence of parentheses, quantifiers bind minimally and rely on context, and parentheses are used only when ambiguity would otherwise arise.
+
+\subsection*{Anaphora (Reference Resolution)}
+Pronouns refer to the nearest compatible antecedent within the same sentence, with proper nouns taking precedence over common nouns, domain mismatches blocking reference, and punctuation resetting reference priority in the order comma, semicolon, then period.
+
+\subsection*{Modality}
+Modal force may be optionally expressed using comparison operators placed before the verb phrase, where equality denotes factual assertion, greater-than denotes obligation, and less-than denotes permission, with modal scope extending until punctuation.
+
+
+\section{Example Usage (Mandarin \texorpdfstring{$\to$}{->} Lǐfǎ)}
+\subsection*{Simplified Chinese Mandarin}
+今天八点鲍勃和菲尔在学校学习数学和物理，鲍勃是学生菲尔是一种老师，他们每天三次学习每小时学习两课，鲍勃不学习物理学习学习数学所以成绩更高，老师说「数学是科学吗」，鲍勃问学生是什么。
+
+\subsection*{Pinyin Mandarin}
+jīn tiān bā diǎn bào bó hé fēi ěr zài xué xiào xué xí shù xué hé wù lǐ bào bó shì xué shēng fēi ěr shì yì zhǒng lǎo shī tā men měi tiān sān cì xué xí měi xiǎo shí xué xí liǎng kè bào bó bù xué xí wù lǐ xué xí xué xí shù xué suǒ yǐ chéng jì gèng gāo lǎo shī shuō 「shù xué shì kē xué ma」 bào bó wèn xué shēng shì shén me.
+
+\subsection*{理法 Lǐfǎ}
+¯几乙乃¯土乙夕乃八困´币夕冂丿十´非儿乙丿彳从乙¯丕乙乃工理忄十火于`自犭，´币夕冂丿二¯从乙工¯山儿乃工教犭´非儿乙丿三¯力夕冂¯山火乙教犭，亻八因次彳从乙乂¯山火乙教犭彳从乙囚¯开儿教犭，´币夕冂丿一彳从乙火于`自犭彳从乙从乙¯丕乙乃工理忄人匕冂讠〉，¯力夕冂¯山火乙教犭讠「¯丕乙乃工理忄二¯开儿技忄了」，´币夕冂丿讠¯从乙工¯山儿乃工教犭二了。
+
+\section{Mathematics}
+
+\subsection*{Lifa Digits}
+\begin{center}
+\begin{tabular}{c c l}
+\toprule
+Digit & Lifa & Spoken \\
+\midrule
+0 & 口 & 力乙乃工 \\
+1 & 回 & 元乙 \\
+2 & 囚 & 儿人 \\
+3 & 因 & 厶夕乃 \\
+4 & 困 & 厶乙 \\
+5 & 囜 & 王于 \\
+6 & 囡 & 力乙于 \\
+7 & 囝 & 千乙 \\
+8 & 囯 & 币夕 \\
+9 & 㘞 & 几乙于 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Lifa Operators}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Operation & Lifa \\
+\midrule
++ & 十 \\
+- & 一 \\
+* & 乂 \\
+/ & 八 \\
+\^{} (power) & 个 \\
+\(\sqrt{\ \ }\) & 厂 \\
+= & 二 \\
+. (decimal point) & | \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Mathematical expressions are written in infix form and evaluated by fixed operator precedence and associativity; brackets are optional and used only to override precedence or improve readability.
+
+\subsection*{Example (Infix)}
+\[
+\sqrt{(8^2)} + (9/3) + 2\cdot 4 - 7 - 6 + 5 + 1 - 0 = 12.0
+\]
+\[
+\text{厂囯个囚十㘞八因十囚乂困一囝一囡十囜十回一口二回囚|口}
+\]
+
+\subsection{Greek Notation (Lǐfǎ Equivalent)}
+Greek symbols denote operators by default; when preceded by 丿 they denote lowercase Greek values or parameters, and when preceded by 丨 they denote variables or indices; the combined prefix 丨丿 marks a variable that holds a derived result. Greek symbols use the form \textbf{[role marker][Greek glyph]}.
+
+\subsection*{Uppercase Greek (Operator Forms)}
+\begin{longtable}{llll}
+\toprule
+Name & Greek UC & Meaning & Lǐfǎ usage \\
+\midrule
+alpha & Α & constant / coefficient & 夕 \\
+beta & Β & coefficient / parameter & 币 \\
+gamma & Γ & gamma function / operator & 工(乃) \\
+delta & Δ & change / difference operator & 大从 \\
+epsilon & Ε & error / tolerance & 儿 \\
+zeta & Ζ & zeta function & 子(乃) \\
+theta & Θ & angle / parameter & 土 \\
+lambda & Λ & eigenvalue / rate operator & 力 \\
+mu & Μ & mean (definition) & 回厶乃乂乃 \\
+pi & Π & product operator & 回丕乃 \\
+rho & Ρ & density / correlation operator & 人 \\
+sigma & Σ & summation operator & 回厶乃 \\
+phi & Φ & function / mapping & 非(从) \\
+omega & Ω & domain / sample space & 从∈王 \\
+\bottomrule
+\end{longtable}
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\subsection*{Lowercase Greek (Scalar/Result Forms)}
+\begin{longtable}{llll}
+\toprule
+Greek lc & Meaning & Lǐfǎ lc & Notes \\
+\midrule
+α & scalar parameter & 丿夕 & scalar value \\
+β & scalar parameter & 丿币 & scalar value \\
+γ & gamma value & 丿工 & scalar result \\
+δ & small change & 丿大 & may appear as 丿大从 when bound to a variable \\
+ε & small quantity & 丿儿 & scalar small value \\
+ζ & zeta value & 丿子 & scalar result \\
+θ & angle value & 丿土 & scalar angle \\
+λ & specific eigenvalue & 丿力 & scalar eigenvalue \\
+μ & mean value & 丿木 & scalar mean \\
+π & circle constant & 丿丕 & scalar constant \\
+ρ & density value & 丿人 & scalar density \\
+σ & standard deviation & 丿厶 & scalar deviation \\
+φ & function value & 丿非 & scalar output \\
+ω & specific element / limit & 丿王 & scalar element \\
+\bottomrule
+\end{longtable}
+
+\subsection*{Standard Deviation Example}
+Standard text form:
+\[
+\sigma=\sqrt{\frac{1}{n}\sum_{i=1}^{n}(x-\mu)^2}
+\]
+Lǐfǎ form (using your operator mapping):
+\[
+\text{丿厶二厂((回厶丨乙((丨从一丿木)个囚))八乃)}
+\]
+
+\section{Functions (Mathematical)}
+The prefix 非 marks a function, binding to the immediately following symbol and its argument list; it may precede ordinary or variable-marked symbols; it binds tighter than arithmetic and looser than parentheses; and it exclusively identifies callable constructs.
+
+\section{Optional Extensions}
+The mathematics layer is complete, with limits, vectors, matrices, and calculus as optional extensions that must reuse existing operators and scope rules.
+
+\section{Short-Form Concept Labels (Optional, One Hanzi + Lǐfǎ)}
+Lexical mathematical concepts such as matrix, vector, domain, and limit function as optional descriptive labels and are not required for procedural expressions, which are fully specified by operators and scope alone.
+
+\begin{longtable}{lll}
+\toprule
+Concept (Chinese) & 1 Char & Lǐfǎ \\
+\midrule
+无穷 (infinity) & 极 & 几乙 \\
+极限 (limit) & 限 & 力乙乃 \\
+函数 (function) & 函 & 火夕乃 \\
+变量 (variable) & 变 & 币夕乃 \\
+常数 (constant) & 常 & 出夕乃 \\
+向量 (vector) & 向 & 小乙夕乃 \\
+矩阵 (matrix) & 矩 & 木乙女 \\
+概率 (probability) & 概 & 工夕乙 \\
+均值 (mean) & 均 & 几于乃 \\
+方差 (variance) & 差 & 出夕 \\
+域 (domain) & 域 & 元于 \\
+值域 (range) & 值 & 中乙 \\
+\bottomrule
+\end{longtable}
+
+\end{document}
